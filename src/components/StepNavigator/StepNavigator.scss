@@ -19,7 +19,8 @@
 
 	&__step {
 		color: $c-white;
-		font-size: 0.75rem;
+		font-size: 0.875rem;
+		font-weight: 700;
 
 		&-index {
 			display: grid;
@@ -75,4 +76,10 @@
 			}
 		}
 	}
+}
+
+.active {
+	border: 1px solid $c-blue-light;
+	background-color: $c-blue-light;
+	color: $c-blue-marine;
 }

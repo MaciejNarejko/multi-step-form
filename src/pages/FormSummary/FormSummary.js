@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom'
-import StepNavigator from '../../components/StepNavigator/StepNavigator'
 
 const FormSummary = () => {
 	return (
-		<section className='form'>
-			<StepNavigator />
+		<>
 			<div className='form__header'>
 				<h1 className='form__title'>Finishing up</h1>
 				<p className='form__description'>Double-check everything looks OK before confirming.</p>
@@ -48,7 +46,7 @@ const FormSummary = () => {
 					Confirm
 				</Link>
 			</div>
-		</section>
+		</>
 	)
 }
 

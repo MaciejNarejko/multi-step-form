@@ -2,11 +2,10 @@ import { Link } from 'react-router-dom'
 import arcade from '../../assets/images/icon-arcade.svg'
 import advanced from '../../assets/images/icon-advanced.svg'
 import pro from '../../assets/images/icon-pro.svg'
-import StepNavigator from '../../components/StepNavigator/StepNavigator'
+
 const FormPlan = () => {
 	return (
-		<section className='form'>
-			<StepNavigator />
+		<>
 			<div className='form__header'>
 				<h1 className='form__title'>Select your plan</h1>
 				<p className='form__description'>You have the option of monthly or yearly billing.</p>
@@ -58,7 +57,7 @@ const FormPlan = () => {
 					Next Step
 				</Link>
 			</div>
-		</section>
+		</>
 	)
 }
 

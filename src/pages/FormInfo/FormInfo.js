@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom'
-import StepNavigator from '../../components/StepNavigator/StepNavigator'
 
 const FormInfo = () => {
 	return (
-		<section className='form'>
-			<StepNavigator />
+		<>
 			<div className='form__header'>
 				<h1 className='form__title'>Personal info</h1>
 				<p className='form__description'>Please provide your name, email address, and phone number.</p>
@@ -37,7 +35,7 @@ const FormInfo = () => {
 					Next Step
 				</Link>
 			</div>
-		</section>
+		</>
 	)
 }
 

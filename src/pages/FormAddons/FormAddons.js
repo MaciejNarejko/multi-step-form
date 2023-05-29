@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom'
-import StepNavigator from '../../components/StepNavigator/StepNavigator'
 
 const FormAddons = () => {
 	return (
-		<section className='form'>
-			<StepNavigator />
+		<>
 			<div className='form__header'>
 				<h1 className='form__title'>Pick add-ons</h1>
 				<p className='form__description'>Add-ons help enhance your gaming experience.</p>
@@ -50,7 +48,7 @@ const FormAddons = () => {
 					Next Step
 				</Link>
 			</div>
-		</section>
+		</>
 	)
 }
 
