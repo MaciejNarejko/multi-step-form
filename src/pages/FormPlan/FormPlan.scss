@@ -12,6 +12,12 @@
 		height: 6rem;
 		border: 1px solid $c-gray-light;
 		border-radius: 0.5rem;
+		cursor: pointer;
+		transition: border-color 0.3s ease;
+
+		&:hover {
+			border-color: $c-blue-purplish;
+		}
 	}
 
 	&__radios {
@@ -53,12 +59,13 @@
 		margin-top: 1rem;
 		border-radius: 0.625rem;
 		background-color: $c-gray-vlight;
-		color: $c-blue-marine;
-		font-weight: 700;
+		color: $c-gray-cool;
+		font-weight: 500;
 		font-size: 0.875rem;
 	}
 
 	&__switch {
+		position: relative;
 		display: flex;
 		align-items: center;
 		width: 2.5rem;
@@ -66,14 +73,38 @@
 		padding-left: 0.3rem;
 		border-radius: 0.625rem;
 		background-color: $c-blue-marine;
-	}
 
-	&__checkbox {
-		width: 0.75rem;
-		height: 0.75rem;
-		border-radius: 50%;
-		background-color: $c-white;
-		cursor: pointer;
+		&-checkbox {
+			opacity: 0;
+			width: 0;
+			height: 0;
+		}
+
+		&-slider {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			border-radius: 50%;
+			cursor: pointer;
+			transition: 0.4s;
+
+			&::before {
+				content: '';
+				position: absolute;
+				left: 4px;
+				bottom: 4px;
+				width: 0.75rem;
+				height: 0.75rem;
+				background-color: white;
+				border-radius: 50%;
+				transition: 0.4s;
+			}
+		}
+	}
+	&__switch-checkbox:checked + &__switch-slider:before {
+		transform: translateX(1.25rem);
 	}
 }
 
@@ -107,4 +138,13 @@
 			margin-top: 2rem;
 		}
 	}
+}
+
+.selected {
+	background-color: $c-gray-vlight;
+	border-color: $c-blue-purplish;
+}
+
+.selectedLabel {
+	color: $c-blue-marine;
 }

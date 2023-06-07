@@ -1,6 +1,15 @@
 import { Link } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { FormContext } from '../../contexts/FormContext'
 
 const FormInfo = () => {
+	const { formData, updateFormData } = useContext(FormContext)
+
+	const handleInputChange = event => {
+		const { name, value } = event.target
+		updateFormData({ [name]: value })
+	}
+
 	return (
 		<>
 			<div className='form__header'>
@@ -9,10 +18,20 @@ const FormInfo = () => {
 			</div>
 			<form className='form__body'>
 				<div className='form-info'>
-					<label htmlFor='name' className='form-info__label'>
+					<label htmlFor='fullName' className='form-info__label'>
 						Name
 					</label>
-					<input type='text' id='name' className='form-info__input' name='name' placeholder='e.g. Stephen King' />
+					<input
+						type='text'
+						id='fullName'
+						className='form-info__input'
+						name='fullName'
+						placeholder='e.g. Stephen King'
+						value={formData.fullName || ''}
+						onChange={handleInputChange}
+						aria-label='Full Name'
+						required
+					/>
 					<label htmlFor='email' className='form-info__label'>
 						Email Address
 					</label>
@@ -22,11 +41,25 @@ const FormInfo = () => {
 						className='form-info__input'
 						name='email'
 						placeholder='e.g. stephenking@lorem.com'
+						value={formData.email || ''}
+						onChange={handleInputChange}
+						aria-label='Email'
+						required
 					/>
 					<label htmlFor='phone' className='form-info__label'>
 						Phone Number
 					</label>
-					<input type='tel' id='phone' className='form-info__input' name='phone' placeholder='e.g. +1 234 567 890' />
+					<input
+						type='tel'
+						id='phone'
+						className='form-info__input'
+						name='phone'
+						placeholder='e.g. +1 234 567 890'
+						value={formData.phone || ''}
+						onChange={handleInputChange}
+						aria-label='Phone number'
+						required
+					/>
 				</div>
 			</form>
 			<div className='form__footer'>

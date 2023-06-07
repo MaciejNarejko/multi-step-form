@@ -1,6 +1,21 @@
 import { Link } from 'react-router-dom'
+import { useContext } from 'react'
+import { FormContext } from '../../contexts/FormContext'
 
 const FormSummary = () => {
+	const { formData } = useContext(FormContext)
+
+	const addonPrices = Object.values(formData.addOns)
+	const total = addonPrices.reduce((sum, price) => {
+		const numericPrice = parseFloat(price.replace(/[^\d.-]/g, ''))
+		return sum + numericPrice
+	}, 0)
+
+	const totalPrice = parseFloat(formData.price.replace(/[^\d.-]/g, ''))
+	const grandTotal = total + totalPrice
+	const durationLabel = formData.type === 'monthly' ? '/mo' : '/yr'
+	const plusLabel = formData.type === 'monthly' ? '+' : ''
+
 	return (
 		<>
 			<div className='form__header'>
@@ -12,28 +27,28 @@ const FormSummary = () => {
 					<div className='summary__selected'>
 						<div className='summary__plan'>
 							<div className='summary__plan-selected'>
-								<p className='summary__plan-selected-name'>Arcade (Yearly)</p>
+								<p className='summary__plan-selected-name'>
+									{formData.plan} ({formData.type.charAt(0).toUpperCase() + formData.type.slice(1)})
+								</p>
 								<Link className='summary__plan-selected-change' to='/plan'>
 									Change
 								</Link>
 							</div>
-							<p className='summary__plan-price'>$90/yr</p>
+							<p className='summary__plan-price'>{formData.price}</p>
 						</div>
 						<div className='summary__services'>
-							<div className='summary__service'>
-								<p className='summary__service-name'>Online service</p>
-								<p className='summary__service-price'>+$10/yr</p>
-							</div>
-							<div className='summary__service'>
-								<p className='summary__service-name'>Larger storage</p>
-								<p className='summary__service-price'>+$20/yr</p>
-							</div>
+							{Object.entries(formData.addOns).map(([addOnName, addOnPrice], index) => (
+								<div className='summary__service' key={index}>
+									<p className='summary__service-name'>{addOnName}</p>
+									<p className='summary__service-price'>{addOnPrice}</p>
+								</div>
+							))}
 						</div>
 					</div>
 
 					<div className='summary__total'>
 						<p className='summary__total-title'>Total (per year)</p>
-						<p className='summary__total-value'>$120/yr</p>
+						<p className='summary__total-value'>{`${plusLabel}$${grandTotal}${durationLabel}`}</p>
 					</div>
 				</div>
 			</form>

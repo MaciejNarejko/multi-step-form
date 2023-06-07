@@ -1,6 +1,45 @@
+import { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { FormContext } from '../../contexts/FormContext'
+
+const addonsData = {
+	online_service: {
+		title: 'Online service',
+		details: 'Access to multiplayer games',
+		monthly: '+$1/mo',
+		yearly: '+$10/yr',
+	},
+	larger_storage: {
+		title: 'Larger storage',
+		details: 'Extra 1TB of cloud save',
+		monthly: '+$2/mo',
+		yearly: '+$20/yr',
+	},
+	customizable_profile: {
+		title: 'Customizable profile',
+		details: 'Custom theme on your profile',
+		monthly: '+$2/mo',
+		yearly: '+$20/yr',
+	},
+}
 
 const FormAddons = () => {
+	const { formData, updateFormData } = useContext(FormContext)
+
+	const handleInputChange = event => {
+		const { name, value, checked } = event.target
+		const { title, monthly, yearly } = addonsData[value]
+		const price = formData.type === 'monthly' ? monthly : yearly
+
+		if (checked) {
+			const updatedAddOns = { ...formData.addOns, [title]: price }
+			updateFormData({ [name]: updatedAddOns })
+		} else {
+			const { [title]: _, ...updatedAddOns } = formData.addOns
+			updateFormData({ [name]: updatedAddOns })
+		}
+	}
+
 	return (
 		<>
 			<div className='form__header'>
@@ -9,34 +48,30 @@ const FormAddons = () => {
 			</div>
 			<form className='form__body'>
 				<div className='addons'>
-					<label htmlFor='online_service' className='addons__online addon'>
-						<input type='checkbox' id='online_service' className='addons__checkbox' name='online_service'></input>
-						<div className='addons__text'>
-							<h2 className='addons__title'>Online service</h2>
-							<p className='addons__details'>Access to multiplayer games</p>
-						</div>
-						<p className='addons__price'>+$1/mo</p>
-					</label>
-					<label htmlFor='larger_storage' className='addons__storage addon'>
-						<input type='checkbox' id='larger_storage' className='addons__checkbox' name='larger_storage'></input>
-						<div className='addons__text'>
-							<h2 className='addons__title'>Larger storage</h2>
-							<p className='addons__details'>Extra 1TB of cloud save</p>
-						</div>
-						<p className='addons__price'>+$2/mo</p>
-					</label>
-					<label htmlFor='customizable_profile' className='addons__profile addon'>
-						<input
-							type='checkbox'
-							id='customizable_profile'
-							className='addons__checkbox'
-							name='customizable_profile'></input>
-						<div className='addons__text'>
-							<h2 className='addons__title'>Customizable profile</h2>
-							<p className='addons__details'>Custom theme on your profile</p>
-						</div>
-						<p className='addons__price'>+$2/mo</p>
-					</label>
+					{Object.keys(addonsData).map(key => {
+						const addon = addonsData[key]
+						return (
+							<label
+								htmlFor={key}
+								className={`addon${formData.addOns && formData.addOns[addon.title] ? ' checked' : ''}`}
+								key={key}>
+								<input
+									type='checkbox'
+									id={key}
+									className='addons__checkbox'
+									name='addOns'
+									value={key}
+									onChange={handleInputChange}
+									checked={formData.addOns?.hasOwnProperty(addon.title)}
+								/>
+								<div className='addons__text'>
+									<h2 className='addons__title'>{addon.title}</h2>
+									<p className='addons__details'>{addon.details}</p>
+								</div>
+								<p className='addons__price'>{formData.type === 'monthly' ? addon.monthly : addon.yearly}</p>
+							</label>
+						)
+					})}
 				</div>
 			</form>
 			<div className='form__footer'>
