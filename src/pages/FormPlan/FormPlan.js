@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import arcade from '../../assets/images/icon-arcade.svg'
 import advanced from '../../assets/images/icon-advanced.svg'
 import pro from '../../assets/images/icon-pro.svg'
@@ -25,6 +25,12 @@ const prices = {
 
 const FormPlan = () => {
 	const { formData, updateFormData } = useContext(FormContext)
+	const navigate = useNavigate()
+	useEffect(() => {
+		if (!formData.fullName || !formData.email || !formData.phone) {
+			navigate('/')
+		}
+	}, [formData.fullName, formData.email, formData.phone, navigate])
 
 	useEffect(() => {
 		const selectedLabel = document.querySelector(`label[for="${formData.plan.toLowerCase()}"]`)
@@ -109,8 +115,8 @@ const FormPlan = () => {
 					Go Back
 				</Link>
 				<div className='form__spacer'></div>
-				<Link className='form__next-page' to={'/addons'}>
-					Next Step
+				<Link to={'/addons'}>
+					<button className='form__next-page'>Next Step</button>
 				</Link>
 			</div>
 		</>

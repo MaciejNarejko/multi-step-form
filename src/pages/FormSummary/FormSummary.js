@@ -1,9 +1,24 @@
-import { Link } from 'react-router-dom'
-import { useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useContext, useEffect } from 'react'
 import { FormContext } from '../../contexts/FormContext'
 
 const FormSummary = () => {
 	const { formData } = useContext(FormContext)
+	const navigate = useNavigate()
+
+	useEffect(() => {
+		if (!formData.fullName || !formData.email || !formData.phone) {
+			navigate('/')
+		}
+	}, [formData.fullName, formData.email, formData.phone, navigate])
+
+	const handleValidationForm = () => {
+		const { fullName, email, phone, plan, price, type } = formData
+		const isFormValid = fullName && email && phone && plan && price && type
+		if (isFormValid) {
+			navigate('/thanks')
+		}
+	}
 
 	const addonPrices = Object.values(formData.addOns)
 	const total = addonPrices.reduce((sum, price) => {
@@ -47,7 +62,9 @@ const FormSummary = () => {
 					</div>
 
 					<div className='summary__total'>
-						<p className='summary__total-title'>Total (per year)</p>
+						<p className='summary__total-title'>{`Total (${
+							formData.type === 'monthly' ? 'per month' : 'per year'
+						})`}</p>
 						<p className='summary__total-value'>{`${plusLabel}$${grandTotal}${durationLabel}`}</p>
 					</div>
 				</div>
@@ -57,9 +74,9 @@ const FormSummary = () => {
 					Go Back
 				</Link>
 				<div className='form__spacer'></div>
-				<Link className='form__next-page' to={'/thanks'}>
+				<button className='form__next-page confirm' onClick={handleValidationForm}>
 					Confirm
-				</Link>
+				</button>
 			</div>
 		</>
 	)

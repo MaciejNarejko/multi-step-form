@@ -1,5 +1,5 @@
-import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { useContext, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { FormContext } from '../../contexts/FormContext'
 
 const addonsData = {
@@ -25,6 +25,12 @@ const addonsData = {
 
 const FormAddons = () => {
 	const { formData, updateFormData } = useContext(FormContext)
+	const navigate = useNavigate()
+	useEffect(() => {
+		if (!formData.fullName || !formData.email || !formData.phone) {
+			navigate('/')
+		}
+	}, [formData.fullName, formData.email, formData.phone, navigate])
 
 	const handleInputChange = event => {
 		const { name, value, checked } = event.target
@@ -79,8 +85,8 @@ const FormAddons = () => {
 					Go Back
 				</Link>
 				<div className='form__spacer'></div>
-				<Link className='form__next-page' to={'/summary'}>
-					Next Step
+				<Link to='/summary'>
+					<button className='form__next-page'>Next Step</button>
 				</Link>
 			</div>
 		</>

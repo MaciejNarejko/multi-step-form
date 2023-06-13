@@ -5,6 +5,8 @@
 	flex-direction: column;
 
 	&__label {
+		display: flex;
+		justify-content: space-between;
 		color: $c-blue-marine;
 		font-size: 0.8rem;
 		line-height: auto;
@@ -22,7 +24,7 @@
 		color: $c-blue-marine;
 		font-size: 1rem;
 		line-height: 1.1rem;
-		transition: border-color 0.3s ease;
+		transition: border-color ease;
 
 		&:focus {
 			border-color: hsl(243, 100%, 62%);
@@ -33,4 +35,14 @@
 			font-weight: 500;
 		}
 	}
+}
+
+.error-message {
+	font-size: 0.875rem;
+	font-weight: 700;
+	color: $c-red-strawberry;
+}
+
+.error {
+	border-color: $c-red-strawberry;
 }

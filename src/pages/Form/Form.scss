@@ -45,6 +45,7 @@
 		color: $c-white;
 		text-decoration: none;
 		cursor: pointer;
+		transition: background-color 0.2s ease;
 
 		&:hover {
 			background-color: $c-blue-ocean;
@@ -103,6 +104,12 @@
 			max-width: 450px;
 			padding: 0;
 			margin-bottom: 1rem;
+			font-size: 1rem;
+		}
+
+		&__next-page {
+			width: 123px;
+			height: 48px;
 			font-size: 1rem;
 		}
 

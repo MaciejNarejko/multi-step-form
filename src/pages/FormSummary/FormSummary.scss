@@ -42,8 +42,7 @@
 			line-height: 1.25rem;
 		}
 	}
-	&__services {
-	}
+
 	&__service {
 		display: flex;
 		justify-content: space-between;
@@ -105,4 +104,8 @@
 			margin-top: 1rem;
 		}
 	}
+}
+
+.confirm:hover {
+	background-color: $c-blue-pastel;
 }

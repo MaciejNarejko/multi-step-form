@@ -1,6 +1,16 @@
 import completion from '../../assets/images/icon-thank-you.svg'
+import { useEffect, useContext } from 'react'
+import { useNavigate } from 'react-router'
+import { FormContext } from '../../contexts/FormContext'
 
 const FormThanks = () => {
+	const { formData } = useContext(FormContext)
+	const navigate = useNavigate()
+	useEffect(() => {
+		if (!formData.fullName || !formData.email || !formData.phone) {
+			navigate('/')
+		}
+	}, [formData.fullName, formData.email, formData.phone, navigate])
 	return (
 		<div className='form__body'>
 			<div className='gratitude'>
