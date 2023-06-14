@@ -72,9 +72,9 @@
 		padding: 1rem;
 
 		&__header {
-			max-width: 450px;
+			max-width: 28.125rem;
 			grid-area: header;
-			margin-top: 40px;
+			margin-top: 2.5rem;
 			margin-bottom: 2.5rem;
 		}
 
@@ -91,7 +91,7 @@
 			display: flex;
 			flex-direction: column;
 			grid-area: body;
-			max-width: 450px;
+			max-width: 28.125rem;
 		}
 
 		&__footer {
@@ -101,15 +101,15 @@
 			align-items: flex-end;
 			grid-area: footer;
 			min-width: auto;
-			max-width: 450px;
+			max-width: 28.125rem;
 			padding: 0;
 			margin-bottom: 1rem;
 			font-size: 1rem;
 		}
 
 		&__next-page {
-			width: 123px;
-			height: 48px;
+			width: 7.7rem;
+			height: 3rem;
 			font-size: 1rem;
 		}
 
