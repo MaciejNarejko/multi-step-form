@@ -102,6 +102,7 @@ const FormPlan = () => {
 							id='plan-checkbox'
 							name='years'
 							className='plan__switch-checkbox'
+							data-testid='yearly-switch'
 							onChange={handleToggle}
 							checked={formData.type === 'monthly' ? false : true}
 						/>
