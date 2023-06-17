@@ -5,7 +5,17 @@ import advanced from '../../assets/images/icon-advanced.svg'
 import pro from '../../assets/images/icon-pro.svg'
 import { FormContext } from '../../contexts/FormContext'
 
-const prices = {
+interface Price {
+	monthly: string
+	yearly: string
+	image: string
+}
+
+interface Prices {
+	[key: string]: Price
+}
+
+const prices: Prices = {
 	Arcade: {
 		monthly: '9/mo',
 		yearly: '90/yr',
@@ -23,18 +33,23 @@ const prices = {
 	},
 }
 
-const FormPlan = () => {
-	const { formData, updateFormData } = useContext(FormContext)
+const FormPlan: React.FC = () => {
+	const formContext = useContext(FormContext)
 	const navigate = useNavigate()
-	useEffect(() => {
-		if (!formData.fullName || !formData.email || !formData.phone) {
-			navigate('/')
-		}
-	}, [formData.fullName, formData.email, formData.phone, navigate])
 
 	useEffect(() => {
-		const selectedLabel = document.querySelector(`label[for="${formData.plan.toLowerCase()}"]`)
-		selectedLabel.classList.add('selected')
+		if (!formContext?.formData?.fullName || !formContext?.formData?.email || !formContext?.formData?.phone) {
+			navigate('/')
+		}
+	}, [formContext?.formData?.fullName, formContext?.formData?.email, formContext?.formData?.phone, navigate])
+
+	useEffect(() => {
+		const selectedLabel = document.querySelector(
+			`label[for="${formContext?.formData.plan.toLowerCase()}"]`
+		) as HTMLLabelElement | null
+		if (selectedLabel) {
+			selectedLabel.classList.add('selected')
+		}
 
 		const planLabels = document.querySelectorAll('.plan__container')
 		planLabels.forEach(label => {
@@ -42,20 +57,20 @@ const FormPlan = () => {
 				label.classList.remove('selected')
 			}
 		})
-	}, [formData.plan])
+	}, [formContext?.formData.plan])
 
-	const handleInputChange = event => {
+	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = event.target
-		const { type } = formData
-		const price = prices[value][type]
-		updateFormData({ ...formData, [name]: value, price })
+		const { type } = formContext?.formData ?? { type: '' }
+		const price = prices[value as keyof typeof prices][type as keyof Price]
+		formContext?.updateFormData({ ...formContext?.formData, [name]: value, price })
 	}
 
 	const handleToggle = () => {
-		const { plan, type } = formData
+		const { plan, type } = formContext?.formData ?? { plan: '', type: '' }
 		const newType = type === 'monthly' ? 'yearly' : 'monthly'
 		const price = prices[plan][newType]
-		updateFormData({ ...formData, type: newType, price, addOns: {} })
+		formContext?.updateFormData({ ...formContext?.formData, type: newType, price, addOns: {} })
 	}
 
 	return (
@@ -84,18 +99,20 @@ const FormPlan = () => {
 							/>
 							<div className='plan__text'>
 								<h2 className='plan__title'>{plan}</h2>
-								{formData.type === 'monthly' ? (
+								{formContext?.formData.type === 'monthly' ? (
 									<p className='plan__price'>{prices[plan].monthly}</p>
 								) : (
 									<p className='plan__price'>{prices[plan].yearly}</p>
 								)}
-								{formData.type === 'yearly' && <p className='plan__bonus'>2 months free</p>}
+								{formContext?.formData.type === 'yearly' && <p className='plan__bonus'>2 months free</p>}
 							</div>
 						</label>
 					))}
 				</div>
 				<div className='plan__period'>
-					<p className={`plan__period-monthly ${formData.type === 'monthly' ? 'selectedLabel' : ''}`}>Monthly</p>
+					<p className={`plan__period-monthly ${formContext?.formData.type === 'monthly' ? 'selectedLabel' : ''}`}>
+						Monthly
+					</p>
 					<label className='plan__switch'>
 						<input
 							type='checkbox'
@@ -104,11 +121,13 @@ const FormPlan = () => {
 							className='plan__switch-checkbox'
 							data-testid='yearly-switch'
 							onChange={handleToggle}
-							checked={formData.type === 'monthly' ? false : true}
+							checked={formContext?.formData.type === 'monthly' ? false : true}
 						/>
 						<span className='plan__switch-slider'></span>
 					</label>
-					<p className={`plan__period-yearly ${formData.type === 'yearly' ? 'selectedLabel' : ''}`}>Yearly</p>
+					<p className={`plan__period-yearly ${formContext?.formData.type === 'yearly' ? 'selectedLabel' : ''}`}>
+						Yearly
+					</p>
 				</div>
 			</form>
 			<div className='form__footer'>

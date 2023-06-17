@@ -10,13 +10,13 @@ describe('App', () => {
 		const formElement = screen.getByText('Personal info')
 		expect(formElement).toBeInTheDocument()
 
-		const fullNameInput = screen.getByLabelText('Name')
+		const fullNameInput = screen.getByLabelText('Name') as HTMLInputElement
 		expect(fullNameInput).toBeInTheDocument()
 
-		const emailInput = screen.getByLabelText('Email Address')
+		const emailInput = screen.getByLabelText('Email Address') as HTMLInputElement
 		expect(emailInput).toBeInTheDocument()
 
-		const phoneInput = screen.getByLabelText('Phone Number')
+		const phoneInput = screen.getByLabelText('Phone Number') as HTMLInputElement
 		expect(phoneInput).toBeInTheDocument()
 
 		const nextButton = screen.getByRole('button', { name: 'Next Step' })

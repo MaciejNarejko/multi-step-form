@@ -1,24 +1,35 @@
 import { useNavigate } from 'react-router-dom'
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, ChangeEvent } from 'react'
 import { FormContext } from '../../contexts/FormContext'
 
-const FormInfo = () => {
-	const { formData, updateFormData } = useContext(FormContext)
+interface Errors {
+	fullName: string
+	email: string
+	phone: string
+	[key: string]: string
+}
+
+const FormInfo: React.FC = (): JSX.Element => {
+	const formContext = useContext(FormContext)
 	const navigate = useNavigate()
 
-	const [errors, setErrors] = useState({
+	const [errors, setErrors] = useState<Errors>({
 		fullName: '',
 		email: '',
 		phone: '',
 	})
 
-	const handleInputChange = event => {
+	const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = event.target
-		updateFormData({ [name]: value })
+		const updatedFormData = {
+			...formContext?.formData,
+			[name]: value,
+		}
+		formContext?.updateFormData(updatedFormData)
 		setErrors(prevErrors => ({ ...prevErrors, [name]: validateField(name, value) }))
 	}
 
-	const validateField = (name, value) => {
+	const validateField = (name: string, value: string): string => {
 		if (!value) {
 			return 'This field is required'
 		}
@@ -34,16 +45,18 @@ const FormInfo = () => {
 		return ''
 	}
 
-	const validateFormInfo = () => {
-		const { fullName, email, phone } = formData
-		const newErrors = {
-			fullName: validateField('fullName', fullName),
-			email: validateField('email', email),
-			phone: validateField('phone', phone),
+	const validateFormInfo = (): boolean => {
+		const { fullName, email, phone } = formContext?.formData || {}
+		const newErrors: Errors = {
+			fullName: validateField('fullName', fullName || ''),
+			email: validateField('email', email || ''),
+			phone: validateField('phone', phone || ''),
 		}
 
 		setErrors(newErrors)
-		return Object.values(newErrors).some(error => error !== '')
+		const errorValues = Object.keys(newErrors).map(key => newErrors[key])
+
+		return errorValues.some(error => error !== '')
 	}
 
 	const handleNextPage = () => {
@@ -71,7 +84,7 @@ const FormInfo = () => {
 						className={`form-info__input ${errors.fullName ? 'error' : ''}`}
 						name='fullName'
 						placeholder='e.g. Stephen King'
-						value={formData.fullName || ''}
+						value={formContext?.formData?.fullName || ''}
 						onChange={handleInputChange}
 						aria-label='Full Name'
 						required
@@ -87,7 +100,7 @@ const FormInfo = () => {
 						className={`form-info__input ${errors.email ? 'error' : ''}`}
 						name='email'
 						placeholder='e.g. stephenking@lorem.com'
-						value={formData.email || ''}
+						value={formContext?.formData?.email || ''}
 						onChange={handleInputChange}
 						aria-label='Email'
 						required
@@ -103,7 +116,7 @@ const FormInfo = () => {
 						className={`form-info__input ${errors.phone ? 'error' : ''}`}
 						name='phone'
 						placeholder='e.g. +1 234 567 890'
-						value={formData.phone || ''}
+						value={formContext?.formData?.phone || ''}
 						onChange={handleInputChange}
 						aria-label='Phone number'
 						required

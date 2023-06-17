@@ -24,9 +24,9 @@ describe('FormInfo', () => {
 
 	describe('error handling', () => {
 		test('displays error messages when form fields are invalid', () => {
-			const fullNameInput = screen.getByLabelText('Full Name')
-			const emailInput = screen.getByLabelText('Email')
-			const phoneInput = screen.getByLabelText('Phone number')
+			const fullNameInput = screen.getByLabelText('Full Name') as HTMLInputElement
+			const emailInput = screen.getByLabelText('Email') as HTMLInputElement
+			const phoneInput = screen.getByLabelText('Phone number') as HTMLInputElement
 
 			fireEvent.change(fullNameInput, { target: { value: 'AB' } })
 			fireEvent.change(emailInput, { target: { value: 'invalid-email' } })

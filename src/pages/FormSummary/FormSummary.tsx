@@ -1,35 +1,43 @@
+import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useContext, useEffect } from 'react'
 import { FormContext } from '../../contexts/FormContext'
 
-const FormSummary = () => {
-	const { formData } = useContext(FormContext)
+const FormSummary: React.FC = () => {
+	const formContext = useContext(FormContext)
 	const navigate = useNavigate()
 
 	useEffect(() => {
-		if (!formData.fullName || !formData.email || !formData.phone) {
+		if (!formContext?.formData.fullName || !formContext?.formData.email || !formContext?.formData.phone) {
 			navigate('/')
 		}
-	}, [formData.fullName, formData.email, formData.phone, navigate])
+	}, [formContext?.formData.fullName, formContext?.formData.email, formContext?.formData.phone, navigate])
 
 	const handleValidationForm = () => {
-		const { fullName, email, phone, plan, price, type } = formData
+		const { fullName, email, phone, plan, price, type } = formContext?.formData ?? {
+			fullName: '',
+			email: '',
+			phone: '',
+			plan: '',
+			price: '',
+			type: '',
+		}
 		const isFormValid = fullName && email && phone && plan && price && type
 		if (isFormValid) {
 			navigate('/thanks')
 		}
 	}
 
-	const addonPrices = Object.values(formData.addOns)
-	const total = addonPrices.reduce((sum, price) => {
+	const addonPrices = Object.values(formContext?.formData?.addOns ?? {})
+	const total = addonPrices.reduce((sum: number, price: string) => {
 		const numericPrice = parseFloat(price.replace(/[^\d.-]/g, ''))
 		return sum + numericPrice
 	}, 0)
 
-	const totalPrice = parseFloat(formData.price.replace(/[^\d.-]/g, ''))
+	const totalPrice = formContext?.formData?.price ? parseFloat(formContext.formData.price.replace(/[^\d.-]/g, '')) : 0
 	const grandTotal = total + totalPrice
-	const durationLabel = formData.type === 'monthly' ? '/mo' : '/yr'
-	const plusLabel = formData.type === 'monthly' ? '+' : ''
+	const durationLabel = formContext?.formData.type === 'monthly' ? '/mo' : '/yr'
+	const plusLabel = formContext?.formData.type === 'monthly' ? '+' : ''
 
 	return (
 		<>
@@ -42,17 +50,20 @@ const FormSummary = () => {
 					<div className='summary__selected'>
 						<div className='summary__plan'>
 							<div className='summary__plan-selected'>
-								<p className='summary__plan-selected-name'>
-									{formData.plan} ({formData.type.charAt(0).toUpperCase() + formData.type.slice(1)})
-								</p>
+								{formContext?.formData && (
+									<p className='summary__plan-selected-name'>
+										{formContext.formData.plan} (
+										{formContext.formData.type.charAt(0).toUpperCase() + formContext.formData.type.slice(1)})
+									</p>
+								)}
 								<Link className='summary__plan-selected-change' to='/plan'>
 									Change
 								</Link>
 							</div>
-							<p className='summary__plan-price'>{formData.price}</p>
+							<p className='summary__plan-price'>{formContext?.formData.price}</p>
 						</div>
 						<div className='summary__services'>
-							{Object.entries(formData.addOns).map(([addOnName, addOnPrice], index) => (
+							{Object.entries(formContext?.formData.addOns ?? {}).map(([addOnName, addOnPrice], index) => (
 								<div className='summary__service' key={index}>
 									<p className='summary__service-name'>{addOnName}</p>
 									<p className='summary__service-price'>{addOnPrice}</p>
@@ -63,7 +74,7 @@ const FormSummary = () => {
 
 					<div className='summary__total'>
 						<p className='summary__total-title'>{`Total (${
-							formData.type === 'monthly' ? 'per month' : 'per year'
+							formContext?.formData.type === 'monthly' ? 'per month' : 'per year'
 						})`}</p>
 						<p className='summary__total-value'>{`${plusLabel}$${grandTotal}${durationLabel}`}</p>
 					</div>

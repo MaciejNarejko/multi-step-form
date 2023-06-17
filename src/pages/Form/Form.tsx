@@ -6,10 +6,10 @@ import FormAddons from '../FormAddons/FormAddons'
 import FormSummary from '../FormSummary/FormSummary'
 import FormThanks from '../FormThanks/FormThanks'
 import Form404 from '../Form404/Form404'
-import StepNavigator from '../../components//StepNavigator/StepNavigator'
+import StepNavigator from '../../components/StepNavigator/StepNavigator'
 import { FormContextProvider } from '../../contexts/FormContext'
 
-const Form = () => {
+const Form: React.FC = () => {
 	return (
 		<section className='form'>
 			<StepNavigator />

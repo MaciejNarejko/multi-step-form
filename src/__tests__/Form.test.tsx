@@ -25,9 +25,9 @@ describe('Proper completion and submission of the form', () => {
 	})
 
 	const fillFormInfo = () => {
-		const fullNameInput = screen.getByLabelText('Full Name')
-		const emailInput = screen.getByLabelText('Email')
-		const phoneInput = screen.getByLabelText('Phone number')
+		const fullNameInput = screen.getByLabelText('Full Name') as HTMLInputElement
+		const emailInput = screen.getByLabelText('Email') as HTMLInputElement
+		const phoneInput = screen.getByLabelText('Phone number') as HTMLInputElement
 
 		fireEvent.change(fullNameInput, { target: { value: 'John Doe' } })
 		fireEvent.change(emailInput, { target: { value: 'john@example.com' } })
@@ -43,10 +43,10 @@ describe('Proper completion and submission of the form', () => {
 		expect(screen.getByText('Select your plan')).toBeInTheDocument()
 
 		expect(screen.getByText('Arcade')).toBeInTheDocument()
-		const advancedRadio = screen.getByText('Advanced')
+		const advancedRadio = screen.getByText('Advanced') as HTMLInputElement
 		fireEvent.click(advancedRadio)
 
-		const yearlySwitch = screen.getByTestId('yearly-switch')
+		const yearlySwitch = screen.getByTestId('yearly-switch') as HTMLInputElement
 		fireEvent.click(yearlySwitch)
 
 		proceedToNextStep()
@@ -55,7 +55,7 @@ describe('Proper completion and submission of the form', () => {
 	const selectAddons = () => {
 		expect(screen.getByText('Pick add-ons')).toBeInTheDocument()
 
-		const addonCheckbox = screen.getByRole('checkbox', { name: /Online service/i })
+		const addonCheckbox = screen.getByRole('checkbox', { name: /Online service/i }) as HTMLInputElement
 		fireEvent.click(addonCheckbox)
 
 		proceedToNextStep()

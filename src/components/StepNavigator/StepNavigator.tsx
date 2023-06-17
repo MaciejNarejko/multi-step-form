@@ -1,9 +1,15 @@
+import React from 'react'
 import { useLocation } from 'react-router-dom'
+
+type Page = {
+	path: string
+	title: string
+}
 
 const StepNavigator = () => {
 	const location = useLocation()
 
-	const pages = [
+	const pages: Page[] = [
 		{
 			path: '/',
 			title: 'YOUR INFO',
@@ -22,7 +28,7 @@ const StepNavigator = () => {
 		},
 	]
 
-	const activePage =
+	const activePage: Page | undefined =
 		location.pathname === '/thanks'
 			? pages.find(page => page.path === '/summary')
 			: pages.find(page => page.path === location.pathname)

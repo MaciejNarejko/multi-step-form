@@ -22,13 +22,13 @@ describe('FormPlan', () => {
 	})
 
 	test('selects a plan and toggles between monthly and yearly', () => {
-		const selectPlan = plan => {
+		const selectPlan = (plan: string) => {
 			const planOption = screen.getByText(plan)
 			fireEvent.click(planOption)
 		}
 
 		const togglePeriod = () => {
-			const yearlySwitch = screen.getByTestId('yearly-switch')
+			const yearlySwitch = screen.getByTestId('yearly-switch') as HTMLInputElement
 			fireEvent.click(yearlySwitch)
 		}
 

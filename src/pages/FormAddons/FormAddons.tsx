@@ -1,8 +1,16 @@
+import React from 'react'
 import { useContext, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FormContext } from '../../contexts/FormContext'
 
-const addonsData = {
+interface AddonData {
+	title: string
+	details: string
+	monthly: string
+	yearly: string
+}
+
+const addonsData: { [key: string]: AddonData } = {
 	online_service: {
 		title: 'Online service',
 		details: 'Access to multiplayer games',
@@ -23,26 +31,27 @@ const addonsData = {
 	},
 }
 
-const FormAddons = () => {
-	const { formData, updateFormData } = useContext(FormContext)
+const FormAddons = (): JSX.Element => {
+	const formContext = useContext(FormContext)
 	const navigate = useNavigate()
+
 	useEffect(() => {
-		if (!formData.fullName || !formData.email || !formData.phone) {
+		if (!formContext?.formData?.fullName || !formContext?.formData?.email || !formContext?.formData?.phone) {
 			navigate('/')
 		}
-	}, [formData.fullName, formData.email, formData.phone, navigate])
+	}, [formContext?.formData?.fullName, formContext?.formData?.email, formContext?.formData?.phone, navigate])
 
-	const handleInputChange = event => {
+	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value, checked } = event.target
 		const { title, monthly, yearly } = addonsData[value]
-		const price = formData.type === 'monthly' ? monthly : yearly
+		const price = formContext?.formData.type === 'monthly' ? monthly : yearly
 
 		if (checked) {
-			const updatedAddOns = { ...formData.addOns, [title]: price }
-			updateFormData({ [name]: updatedAddOns })
+			const updatedAddOns = { ...formContext?.formData.addOns, [title]: price }
+			formContext?.updateFormData({ ...formContext?.formData, [name]: updatedAddOns })
 		} else {
-			const { [title]: _, ...updatedAddOns } = formData.addOns
-			updateFormData({ [name]: updatedAddOns })
+			const { [title]: _, ...updatedAddOns } = formContext?.formData.addOns as Record<string, string>
+			formContext?.updateFormData({ [name]: updatedAddOns })
 		}
 	}
 
@@ -59,7 +68,9 @@ const FormAddons = () => {
 						return (
 							<label
 								htmlFor={key}
-								className={`addon${formData.addOns && formData.addOns[addon.title] ? ' checked' : ''}`}
+								className={`addon${
+									formContext?.formData.addOns && formContext?.formData.addOns[addon.title] ? ' checked' : ''
+								}`}
 								key={key}>
 								<input
 									type='checkbox'
@@ -68,13 +79,15 @@ const FormAddons = () => {
 									name='addOns'
 									value={key}
 									onChange={handleInputChange}
-									checked={formData.addOns?.hasOwnProperty(addon.title)}
+									checked={formContext?.formData.addOns?.hasOwnProperty(addon.title)}
 								/>
 								<div className='addons__text'>
 									<h2 className='addons__title'>{addon.title}</h2>
 									<p className='addons__details'>{addon.details}</p>
 								</div>
-								<p className='addons__price'>{formData.type === 'monthly' ? addon.monthly : addon.yearly}</p>
+								<p className='addons__price'>
+									{formContext?.formData.type === 'monthly' ? addon.monthly : addon.yearly}
+								</p>
 							</label>
 						)
 					})}

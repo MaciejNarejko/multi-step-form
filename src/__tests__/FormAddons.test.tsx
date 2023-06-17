@@ -14,7 +14,7 @@ test('displays selected add-ons after clicking on checkbox', () => {
 		</MemoryRouter>
 	)
 
-	const addonCheckbox = screen.getByRole('checkbox', { name: /Online service/i })
+	const addonCheckbox = screen.getByRole('checkbox', { name: /Online service/i }) as HTMLInputElement
 
 	fireEvent.click(addonCheckbox)
 
