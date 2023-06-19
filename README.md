@@ -2,11 +2,11 @@
 
 <div align="center">
   <h3>
-    <a href="maciejnarejko.github.io/calculator-app/">
+    <a href="https://multi-step-form-maciejnarejko.vercel.app">
       Live
     </a>
     | 
-    <a href="">
+    <a href="https://www.frontendmentor.io/solutions/multistep-form-react-typescript-scs-YJWepk0qP-">
       Solution
     </a>
     | 
@@ -28,7 +28,7 @@ Project assumptions:
 - Check for the user's initial theme preference in local storage,
 - Users should receive form validation messages;
 
-This is a solution to the [Calculator App on Frontend Mentor](https://www.frontendmentor.io/challenges/calculator-app-9lteq5N29).
+This is a solution to the [Multi-step form on Frontend Mentor](https://www.frontendmentor.io/challenges/multistep-form-YVAnSdqQBJ).
 
 ## Screenshots
 
@@ -83,10 +83,11 @@ src/
 
 ## Built with
 
+- React 18.2.12
+- React Router 6.11.2
+- TypeScript 5.1.3
 - Semantic HTML5 markup
 - SCSS
-- React 18.2.12
-- TypeScript 5.1.3
 - Mobile-first workflow
 
 ## Local Setup
