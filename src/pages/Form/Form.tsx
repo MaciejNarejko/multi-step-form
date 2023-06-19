@@ -11,7 +11,7 @@ import { FormContextProvider } from '../../contexts/FormContext'
 
 const Form: React.FC = () => {
 	return (
-		<div className='form'>
+		<form className='form'>
 			<StepNavigator />
 			<FormContextProvider>
 				<Routes>
@@ -24,7 +24,7 @@ const Form: React.FC = () => {
 					<Route path='*' element={<Navigate to='/404' />} />
 				</Routes>
 			</FormContextProvider>
-		</div>
+		</form>
 	)
 }
 

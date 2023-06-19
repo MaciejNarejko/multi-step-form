@@ -79,7 +79,7 @@ const FormPlan: React.FC = () => {
 				<h1 className='form__title'>Select your plan</h1>
 				<p className='form__description'>You have the option of monthly or yearly billing.</p>
 			</div>
-			<form className='form__body'>
+			<div className='form__body'>
 				<div className='plan'>
 					{Object.keys(prices).map(plan => (
 						<label htmlFor={plan.toLowerCase()} className='plan__container' key={plan}>
@@ -129,7 +129,7 @@ const FormPlan: React.FC = () => {
 						Yearly
 					</p>
 				</div>
-			</form>
+			</div>
 			<div className='form__footer'>
 				<Link className='form__prev-page' to={'/'}>
 					Go Back

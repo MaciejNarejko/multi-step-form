@@ -45,7 +45,7 @@ const FormSummary: React.FC = () => {
 				<h1 className='form__title'>Finishing up</h1>
 				<p className='form__description'>Double-check everything looks OK before confirming.</p>
 			</div>
-			<form className='form__body'>
+			<div className='form__body'>
 				<div className='summary'>
 					<div className='summary__selected'>
 						<div className='summary__plan'>
@@ -79,7 +79,7 @@ const FormSummary: React.FC = () => {
 						<p className='summary__total-value'>{`${plusLabel}$${grandTotal}${durationLabel}`}</p>
 					</div>
 				</div>
-			</form>
+			</div>
 			<div className='form__footer'>
 				<Link className='form__prev-page' to={'/addons'}>
 					Go Back

@@ -85,6 +85,7 @@ src/
 
 - React 18.2.12
 - React Router 6.11.2
+- React Testing Library 14.0
 - TypeScript 5.1.3
 - Semantic HTML5 markup
 - SCSS

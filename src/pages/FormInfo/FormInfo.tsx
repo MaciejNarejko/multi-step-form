@@ -72,7 +72,7 @@ const FormInfo: React.FC = (): JSX.Element => {
 				<h1 className='form__title'>Personal info</h1>
 				<p className='form__description'>Please provide your name, email address, and phone number.</p>
 			</div>
-			<form className='form__body'>
+			<div className='form__body'>
 				<div className='form-info'>
 					<label htmlFor='fullName' className='form-info__label'>
 						Name
@@ -122,7 +122,7 @@ const FormInfo: React.FC = (): JSX.Element => {
 						required
 					/>
 				</div>
-			</form>
+			</div>
 			<div className='form__footer'>
 				<div className='form__spacer'></div>
 				<button className='form__next-page' onClick={handleNextPage}>

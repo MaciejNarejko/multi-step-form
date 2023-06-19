@@ -61,7 +61,7 @@ const FormAddons = (): JSX.Element => {
 				<h1 className='form__title'>Pick add-ons</h1>
 				<p className='form__description'>Add-ons help enhance your gaming experience.</p>
 			</div>
-			<form className='form__body'>
+			<div className='form__body'>
 				<div className='addons'>
 					{Object.keys(addonsData).map(key => {
 						const addon = addonsData[key]
@@ -92,7 +92,7 @@ const FormAddons = (): JSX.Element => {
 						)
 					})}
 				</div>
-			</form>
+			</div>
 			<div className='form__footer'>
 				<Link className='form__prev-page' to={'/plan'}>
 					Go Back
