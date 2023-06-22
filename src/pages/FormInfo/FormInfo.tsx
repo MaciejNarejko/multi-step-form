@@ -59,7 +59,8 @@ const FormInfo: React.FC = (): JSX.Element => {
 		return errorValues.some(error => error !== '')
 	}
 
-	const handleNextPage = () => {
+	const handleNextPage = (event: React.MouseEvent<HTMLButtonElement>) => {
+		event.preventDefault()
 		const hasErrors = validateFormInfo()
 		if (!hasErrors) {
 			navigate('/plan')
